@@ -1,0 +1,10 @@
+{
+	"hooks": {
+		"PostToolUse": [
+			{
+				"type": "command",
+				"command": "uv run ruff check --fix --quiet ."
+			}
+		]
+	}
+}
