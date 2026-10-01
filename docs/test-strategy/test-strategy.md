@@ -13,12 +13,12 @@ Ensure that the bank account and transfer system is functional, secure, reliable
 - Unit tests: business logic, input validation, balance calculations
 - Integration tests: repository/DB, API endpoints, message queues (if present)
 - End-to-end tests: complete API scenarios (transfer, balance verification, transaction recording)
-- Smoke tests: basic health checks after deployment
+- Smoke tests: basic health checks after deployment; target is `GET /health`, tested via a router-only app with an overridden service (importing `app.main` touches the real DB)
 - Regression tests: critical scenarios after changes
 
 ## Test Types
 - Functional: account CRUD, transfers, transaction list
-- API: contract tests, status codes, error states
+- API: contract tests, status codes, error states; API contract tests are co-located as `app/api/test_*_routes.py` (`test_health_routes.py` is the first)
 - Data integrity: atomic transactions, error rollback
 - Performance: API latency, transfer load, DB throughput
 - Security: authentication, authorization, input validation, SQL injection

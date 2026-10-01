@@ -60,3 +60,12 @@ uvicorn app.main:app --reload
 Open your browser and type `localhost:8000`. In essential workshop you will see Swagger. In advanced workshop you will see a simple web page.
 
 > Hint: you can try browser in VS Code
+
+### Health check
+
+```bash
+curl http://localhost:8000/health
+# {"status":"ok"}
+```
+
+When the database is unreachable, the endpoint returns HTTP 503 with `{"status":"unavailable"}`.
