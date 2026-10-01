@@ -6,6 +6,7 @@ from sqlmodel import SQLModel
 
 from app.api.account_routes import router as account_router
 from app.api.bank_routes import router as bank_router
+from app.api.health_routes import router as health_router
 from app.db import engine
 from app.logging_config import setup_logging
 from app.startup import create_default_accounts
@@ -27,5 +28,6 @@ def serve_static_files():
 
 app.include_router(account_router, prefix="/api/v1", tags=["account"])
 app.include_router(bank_router, prefix="/api/v1", tags=["bank"])
+app.include_router(health_router, tags=["health"])
 
 create_default_accounts()

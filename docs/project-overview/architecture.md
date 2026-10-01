@@ -32,11 +32,20 @@ Validators (app/validator/)     ← Input validation, independent of I/O
 | `app/validator/` | Input validation (`ValidationResult` pattern, no exceptions) |
 | `app/api/` | FastAPI routers — one router per domain concept |
 | `app/api/dependencies.py` | Dependency injection wiring |
-| `docs/` | Project documentation (managed by documentation-specialist) |
+| `docs/` | Project documentation |
 | `.github/instructions/` | Copilot instruction files with `applyTo` scoping |
 | `.github/skills/` | Copilot skill directories for agent-consumable domain knowledge |
 | `migrations/` | Alembic migration scripts |
 | `resources/` | Static assets, SQL seed data, web frontend |
+
+## Operational endpoints
+
+`GET /health` (`app/api/health_routes.py` → `HealthService` → `HealthRepository`), mounted at the root, not under `/api/v1`.
+Returns 200 `{"status":"ok"}`, or 503 `{"status":"unavailable"}` when the database check fails.
+
+- **Combined liveness + DB readiness on one endpoint** — a human product decision on issue #1. Accepted trade-off: an orchestrator using it as a liveness probe will restart the app during a DB outage. Only `SELECT 1` runs; there is no migrations check.
+- **Root path, not `/api/v1`** — it is an infrastructure probe, so its URL stays stable across API versions.
+- **Follows the normal layers** (route → service → repository) because it performs I/O.
 
 ## Related Documentation
 
