@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "hooks": {
+    "SessionEnd": [
+      {
+        "matcher": "clear|logout|prompt_input_exit|other",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"$CLAUDE_PROJECT_DIR/.claude/skills/session-cost/scripts/cost.py\" --hook",
+            "timeout": 60
+          }
+        ]
+      }
+    ]
+  },
+  "permissions": {
+    "allow": [
+      "Bash(git *)",
+      "Bash(.claude/skills/issue-lifecycle/scripts/issue.sh *)",
+      "Bash(.claude/skills/issue-lifecycle/scripts/branch.sh *)",
+      "Bash(find *)",
+      "Bash(grep *)",
+      "Bash(touch *)",
+      "Bash(mkdir *)",
+      "Bash(uv run *)",
+      "Bash(uv sync *)",
+      "Bash(gh --version)",
+      "Bash(gh label *)",
+      "Bash(gh issue *)",
+      "Bash(cat *)",
+      "Bash(sed *)",
+      "Edit",
+      "Read(*)",
+      "Read(//tmp/**)"
+    ],
+    "ask": [
+      "Bash(gh pr create:*)",
+      "Bash(git reflog *)",
+      "Bash(git push --force *)",
+      "Bash(git push -f *)"
+    ],
+    "deny": [
+      "Read(*.env)",
+      "Bash(rm:*)",
+      "Bash(curl:*)"
+    ],
+    "defaultMode": "default",
+    "additionalDirectories": [
+      "/tmp"
+    ]
+  }
+}
